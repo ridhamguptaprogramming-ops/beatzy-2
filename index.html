@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Platform UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-container">
+        <aside class="sidebar">
+            <h2>SIMIN WAHDANI</h2>
+            <nav>
+                <p class="section-title">Menu</p>
+                <ul>
+                    <li class="active">Home</li>
+                    <li>Artists</li>
+                    <li>Genres</li>
+                    <li>Albums</li>
+                </ul>
+                <p class="section-title">Library</p>
+                <ul>
+                    <li>My Playlist</li>
+                    <li>Favourites</li>
+                    <li>Popular</li>
+                </ul>
+            </nav>
+            <div class="mini-player">
+                <p>Now Playing...</p>
+                <div class="play-btn">▶</div>
+            </div>
+        </aside>
+
+        <main class="content">
+            <header class="hero">
+                <div class="hero-text">
+                    <span>Full album</span>
+                    <h1>Reza Malekzadeh</h1>
+                    <button class="btn-primary">Listen Now</button>
+                    <button class="btn-outline">Follow</button>
+                </div>
+            </header>
+
+            <section class="trending">
+                <h3>Trending</h3>
+                <div class="track"><span>01</span> Baroon baroon <span class="time">3:08</span></div>
+                <div class="track"><span>02</span> Mano bebakhsh <span class="time">5:01</span></div>
+                <div class="track"><span>03</span> Ajab deli <span class="time">4:00</span></div>
+            </section>
+        </main>
+
+        <aside class="explore">
+            <input type="text" placeholder="Search...">
+            <h3>Explore</h3>
+            <div class="explore-item">Ahmad saeidi</div>
+            <div class="explore-item">X Band</div>
+            <div class="explore-item">Ehaam</div>
+        </aside>
+        <div class="track-list">
+    <div class="track" data-src="song1.mp3" data-title="Baroon baroon" data-artist="Reza">
+        <span>01</span> Baroon baroon <span class="time">3:08</span>
+    </div>
+    <div class="track" data-src="song2.mp3" data-title="Mano bebakhsh" data-artist="Reza">
+        <span>02</span> Mano bebakhsh <span class="time">5:01</span>
+    </div>
+</div>
+
+<div class="mini-player">
+    <div class="info">
+        <p id="current-title">Select a song</p>
+        <small id="current-artist">---</small>
+    </div>
+    <button id="master-play">▶</button>
+</div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
