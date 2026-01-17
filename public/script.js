@@ -151,7 +151,6 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 
-const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors());
@@ -161,7 +160,7 @@ app.use("/uploads", express.static("uploads"));
 if (!fs.existsSync("uploads")) fs.mkdirSync("uploads");
 if (!fs.existsSync("songs.json")) fs.writeFileSync("songs.json","[]");
 
-const upload = multer({ dest: "uploads/" });
+
 
 app.get("/", (req,res)=>res.send("Music API Running"));
 
