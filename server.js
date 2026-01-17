@@ -77,3 +77,71 @@ function renderPlaylist(){
   });
 }
 renderPlaylist();
+const express = require("express");
+const multer = require("multer");
+const cors = require("cors");
+const fs = require("fs");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.use("/uploads", express.static("uploads"));
+
+const upload = multer({ dest: "uploads/" });
+const DB = "songs.json";
+
+/* INIT DB */
+if (!fs.existsSync(DB)) fs.writeFileSync(DB, "[]");
+
+/* GET SONGS */
+app.get("/songs", (req,res)=>{
+  res.json(JSON.parse(fs.readFileSync(DB)));
+});
+
+/* UPLOAD SONG */
+app.post("/upload", upload.fields([
+  { name: "song", maxCount: 1 },
+  { name: "cover", maxCount: 1 }
+]), (req,res)=>{
+  const songs = JSON.parse(fs.readFileSync(DB));
+
+  const newSong = {
+    title: req.body.title,
+    artist: req.body.artist,
+    src: `/uploads/${req.files.song[0].filename}`,
+    cover: `/uploads/${req.files.cover[0].filename}`,
+    plays: 0
+  };
+
+  songs.push(newSong);
+  fs.writeFileSync(DB, JSON.stringify(songs,null,2));
+  res.json({ success:true });
+});
+
+app.listen(3000, ()=>console.log("Server running on http://localhost:3000"));
+fetch("http://localhost:3000/songs")
+  .then(r=>r.json())
+  .then(data=>{
+    songs = data;
+    renderTracks();
+  });
+function renderTracks(){
+  const tbody = document.getElementById("songTableBody");
+  tbody.innerHTML = "";
+  songs.forEach((song, index)=>{
+    tbody.innerHTML += `
+      <tr>
+        <td>${song.title}</td>
+        <td>${song.artist}</td>
+        <td><img src="${song.cover}" width="50"></td>
+        <td>${song.plays}</td>
+      </tr>
+    `;
+  });
+}
+import { getDocs, collection } from "firebase/firestore";
+
+const snapshot = await getDocs(collection(db,"songs"));
+snapshot.forEach(doc=>{
+  songs.push(doc.data());
+});
