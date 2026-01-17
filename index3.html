@@ -2,16 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin – Music App</title>
+<title>Admin Panel – Music App</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,sans-serif}
 
 body{
   min-height:100vh;
@@ -21,39 +16,36 @@ body{
   justify-content:center;
 }
 
-.admin{
-  width:90%;
-  max-width:900px;
+.admin,.login{
   background:#fff;
-  border-radius:20px;
   padding:30px;
+  border-radius:20px;
+  width:95%;
+  max-width:1000px;
   box-shadow:0 30px 80px rgba(0,0,0,.3);
 }
 
-h1{
-  margin-bottom:20px;
-  color:#4f46e5;
-}
+.login{max-width:400px}
 
-form{
-  display:grid;
-  grid-template-columns:1fr 1fr 1fr auto;
-  gap:12px;
-}
+h1{text-align:center;color:#4f46e5;margin-bottom:20px}
 
-input{
+input,button{
   padding:12px;
   border-radius:10px;
   border:1px solid #ddd;
 }
 
 button{
-  padding:12px 18px;
-  border:none;
-  border-radius:10px;
   background:#4f46e5;
   color:#fff;
+  border:none;
   cursor:pointer;
+}
+
+form{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr 1fr auto;
+  gap:10px;
 }
 
 table{
@@ -62,69 +54,124 @@ table{
   border-collapse:collapse;
 }
 
-th,td{
-  padding:12px;
-  text-align:left;
+th,td{padding:12px;text-align:left}
+th{background:#f3f4f6}
+tr:nth-child(even){background:#f9fafb}
+
+.cover{
+  width:40px;
+  height:40px;
+  border-radius:6px;
+  object-fit:cover;
 }
 
-th{
-  background:#f3f4f6;
-}
-
-tr:nth-child(even){
-  background:#f9fafb;
-}
-
-.delete{
-  background:#ef4444;
-}
+.delete{background:#ef4444}
+.logout{background:#111827;margin-top:20px}
+.error{color:red;text-align:center;margin-top:10px}
 </style>
 </head>
 
 <body>
 
-<div class="admin">
-  <h1>🎧 Admin – Manage Songs</h1>
+<!-- LOGIN -->
+<div class="login" id="loginBox">
+  <h1>Admin Login</h1>
+  <input id="user" placeholder="Username">
+  <input id="pass" type="password" placeholder="Password">
+  <button onclick="login()">Login</button>
+  <div class="error" id="error"></div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin" id="adminBox" style="display:none">
+  <h1>🎧 Admin – Songs, Covers & Analytics</h1>
 
   <!-- ADD SONG -->
   <form onsubmit="addSong(event)">
     <input id="title" placeholder="Song Title" required>
-    <input id="artist" placeholder="Artist Name" required>
-    <input id="src" placeholder="File name (song1.mp3)" required>
+    <input id="artist" placeholder="Artist" required>
+    <input id="src" placeholder="song.mp3" required>
+    <input id="cover" type="file" accept="image/*" required>
     <button>Add</button>
   </form>
 
-  <!-- SONG LIST -->
+  <!-- SONG TABLE -->
   <table>
     <thead>
       <tr>
+        <th>Cover</th>
         <th>Title</th>
         <th>Artist</th>
         <th>File</th>
+        <th>Plays</th>
         <th>Action</th>
       </tr>
     </thead>
     <tbody id="list"></tbody>
   </table>
+
+  <button class="logout" onclick="logout()">Logout</button>
 </div>
 
 <script>
-let songs = JSON.parse(localStorage.getItem("songs")) || [];
+/* DEFAULT ADMIN */
+if(!localStorage.admin){
+  localStorage.admin = JSON.stringify({
+    user:"admin",
+    pass:btoa("admin123")
+  });
+}
+
+/* LOGIN */
+function login(){
+  const a = JSON.parse(localStorage.admin);
+  if(user.value === a.user && btoa(pass.value) === a.pass){
+    localStorage.loggedIn = "true";
+    showAdmin();
+  } else {
+    error.textContent = "Invalid login";
+  }
+}
+
+function logout(){
+  localStorage.loggedIn = "";
+  location.reload();
+}
+
+function showAdmin(){
+  loginBox.style.display = "none";
+  adminBox.style.display = "block";
+  render();
+}
+
+if(localStorage.loggedIn === "true") showAdmin();
+
+/* SONG DATA */
+let songs = JSON.parse(localStorage.songs || "[]");
 
 function save(){
-  localStorage.setItem("songs", JSON.stringify(songs));
+  localStorage.songs = JSON.stringify(songs);
   render();
 }
 
 function addSong(e){
   e.preventDefault();
-  songs.push({
-    title: title.value,
-    artist: artist.value,
-    src: src.value
-  });
-  e.target.reset();
-  save();
+  const file = cover.files[0];
+  const reader = new FileReader();
+
+  reader.onload = () => {
+    songs.push({
+      title: title.value,
+      artist: artist.value,
+      src: src.value,      // MP3 filename
+      cover: reader.result, // Base64 image
+      plays: 0
+    });
+    e.target.reset();
+    save();
+  };
+
+  reader.readAsDataURL(file);
 }
 
 function deleteSong(i){
@@ -133,20 +180,20 @@ function deleteSong(i){
 }
 
 function render(){
-  const list=document.getElementById("list");
-  list.innerHTML="";
+  list.innerHTML = "";
   songs.forEach((s,i)=>{
-    list.innerHTML+=`
+    list.innerHTML += `
       <tr>
+        <td><img class="cover" src="${s.cover}"></td>
         <td>${s.title}</td>
         <td>${s.artist}</td>
         <td>${s.src}</td>
+        <td>${s.plays || 0}</td>
         <td><button class="delete" onclick="deleteSong(${i})">Delete</button></td>
-      </tr>`;
+      </tr>
+    `;
   });
 }
-
-render();
 </script>
 
 </body>

@@ -38,4 +38,42 @@ document.getElementById("addSongForm").onsubmit = function(e){
   songList.appendChild(li);
 
   this.reset();
-};
+};  
+songList.innerHTML = "";
+
+songs.forEach((song, index) => {
+  const li = document.createElement("li");
+  li.textContent = `${song.title} by ${song.artist}`;
+  songList.appendChild(li);
+});
+song.plays = (song.plays || 0) + 1;
+localStorage.songs = JSON.stringify(songs);
+document.getElementById("playCount").textContent = `Plays: ${song.plays}`;
+
+function logout(){
+  window.location.href = "index.html";
+}
+function delayedLogout(){
+    alert("Logging out due to inactivity");
+}
+function playSong(song){
+  audio.src = song.src;
+  audio.play();
+  now.textContent = song.title + " • " + song.artist;
+
+  song.plays = (song.plays || 0) + 1;
+  localStorage.songs = JSON.stringify(songs);
+
+  renderPlaylist();
+}
+function renderPlaylist(){
+  const playlist = document.getElementById("playlist");
+  playlist.innerHTML = "";
+  songs.forEach((song, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${song.title} by ${song.artist} - Plays: ${song.plays || 0}`;
+    li.onclick = () => playSong(song);
+    playlist.appendChild(li);
+  });
+}
+renderPlaylist();
