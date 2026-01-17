@@ -39,3 +39,5 @@ app.post("/upload",
 );
 
 app.listen(PORT,()=>console.log("Running on http://localhost:"+PORT));
+
+genre: req.body.genre || "Other";

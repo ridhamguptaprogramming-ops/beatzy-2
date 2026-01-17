@@ -16,7 +16,7 @@ document.getElementById("mainPlay").onclick = function(){
 document.querySelectorAll(".play").forEach(b=>{
   b.onclick = ()=>toggle(b);
 });
-const songs = JSON.parse(localStorage.getItem("songs")) || [];
+// const songs = JSON.parse(localStorage.getItem("songs")) || [];
 const songList = document.getElementById("songList");
 
 songs.forEach((song, index) => {
@@ -185,4 +185,41 @@ app.post("/upload",
     res.json({ success:true });
 });
 
-app.listen(PORT, ()=>console.log("Server running"));
+const tracksBox = document.querySelector(".tracks");
+const audio = document.getElementById("audio");
+const coverImg = document.getElementById("coverImg");
+const nowPlaying = document.getElementById("nowPlaying");
+
+let songs = [];
+
+/* FETCH SONGS FROM BACKEND */
+fetch("/songs")
+  .then(res => res.json())
+  .then(data => {
+    songs = data;
+    renderSongs();
+  });
+
+function renderSongs() {
+  tracksBox.innerHTML = "";
+
+  songs.forEach(song => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <span>${song.title} • ${song.artist}</span>
+      <button>▶</button>
+    `;
+
+    li.querySelector("button").onclick = () => playSong(song);
+    tracksBox.appendChild(li);
+  });
+}
+
+function playSong(song) {
+  audio.src = song.src;
+  audio.play();
+
+  nowPlaying.textContent = song.title + " • " + song.artist;
+  if (song.cover) coverImg.src = song.cover;
+}

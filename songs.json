@@ -1,0 +1,23 @@
+[
+  {
+    "title": "My Song",
+    "artist": "Test",
+    "src": "/uploads/abc123",
+    "cover": "/uploads/xyz456",
+    "plays": 0
+  },
+  {
+    "title": "Rang",
+    "artist": "Akshay Kumar",
+    "src": "/uploads/c09bb7c4883842f3fce0c6aa4f52c30a",
+    "cover": "/uploads/bcbaad309d817e5c57d507a0dcc87871",
+    "plays": 0
+  },
+  {
+    "title": "Rang",
+    "artist": "Akshay Kumar",
+    "src": "/uploads/6ee447e02de3948e02afafde441b4908",
+    "cover": "/uploads/4aac6c0c4fffdc1adec93a910ea7d2b4",
+    "plays": 0
+  }
+]

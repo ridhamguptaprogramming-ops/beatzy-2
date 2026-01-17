@@ -19,17 +19,12 @@
 
     <nav>
       <a class="active">Explore</a>
-      <a>Genres</a>
+      <a href="genres.html">Genres</a>
       <a>Albums</a>
       <a>Artist</a>
       <a>Favourites</a>
       <a>My Music</a>
     </nav>
-
-    <div class="mini-player">
-      <span>Balonku Ada 5 Meter</span>
-      <button id="miniPlay">▶</button>
-    </div>
   </aside>
 
   <!-- MAIN -->
@@ -40,52 +35,33 @@
         <h1>Listen to trending songs<br>all the time</h1>
         <button>Explore Now</button>
       </div>
-      <div class="hero-img"></div>
     </div>
 
     <section>
-      <h2>Playlist</h2>
-      <div class="playlist">
-        <div class="card">Musik Pagi</div>
-        <div class="card">Lofi Bass</div>
-        <div class="card">Anak Senja</div>
-        <div class="card">Musik Anti Galau</div>
-      </div>
-    </section>
-
-    <section>
       <h2>Trending</h2>
-      <img id="coverImg">
 
-      <ul class="tracks">
-        <li>
-          <span>Balonku Ada 5 Meter</span>
-          <button class="play">▶</button>
-        </li>
-        <li>
-          <span>Kucing Kesayangan</span>
-          <button class="play">▶</button>
-        </li>
-      </ul>
+      <img id="coverImg" style="width:180px;border-radius:14px;margin-bottom:16px">
+
+      <!-- DYNAMIC SONG LIST -->
+      <ul class="tracks"></ul>
     </section>
 
   </main>
 
   <!-- PLAYER -->
   <aside class="player">
-    <h3>Balonku Ada 5 Meter</h3>
-    <p style="opacity:.8;margin-top:4px">Mamank • Dance Beat</p>
-
-    <div class="progress"><span></span></div>
+    <h3 id="nowPlaying">No song</h3>
+    <audio id="audio"></audio>
 
     <div class="controls">
-      <button>⏮</button>
-      <button id="mainPlay">▶</button>
-      <button>⏭</button>
+      <button onclick="audio.currentTime=0">⏮</button>
+      <button onclick="audio.paused ? audio.play() : audio.pause()">▶</button>
+      <button onclick="audio.pause()">⏹</button>
     </div>
   </aside>
+
 </div>
- 
+
 <script src="script.js"></script>
 </body>
 </html>
