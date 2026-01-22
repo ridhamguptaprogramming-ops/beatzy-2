@@ -2,169 +2,31 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Music Player</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Inter,system-ui,sans-serif;
-}
-
-body{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
-  color:#fff;
-}
-
-.player{
-  width:320px;
-  background:#111;
-  border-radius:24px;
-  padding:24px;
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
-  text-align:center;
-}
-
-.cover{
-  width:100%;
-  height:220px;
-  border-radius:16px;
-  background:url("https://images.unsplash.com/photo-1511379938547-c1f69419868d") center/cover;
-}
-
-h3{
-  margin-top:16px;
-  font-size:20px;
-}
-
-p{
-  opacity:.7;
-  font-size:14px;
-}
-
-.progress{
-  width:100%;
-  height:6px;
-  background:#222;
-  border-radius:10px;
-  margin:18px 0;
-  cursor:pointer;
-}
-
-.bar{
-  height:100%;
-  width:0%;
-  background:#4f9cff;
-  border-radius:10px;
-}
-
-.time{
-  display:flex;
-  justify-content:space-between;
-  font-size:12px;
-  opacity:.6;
-}
-
-.controls{
-  margin-top:20px;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-}
-
-.controls button{
-  background:#1f1f1f;
-  border:none;
-  color:white;
-  width:50px;
-  height:50px;
-  border-radius:50%;
-  font-size:18px;
-  cursor:pointer;
-}
-
-.controls button.play{
-  background:#4f9cff;
-  width:64px;
-  height:64px;
-  font-size:22px;
-}
-</style>
+<title>My Music App</title>
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="player">
-  <div class="cover"></div>
+<div class="app">
+  <h1>🎧 My Music App</h1>
 
-  <h3>Night Vibes</h3>
-  <p>Chill Music</p>
+  <div class="player">
+    <img id="cover" src="" alt="Cover">
+    <h2 id="title">No Song</h2>
+    <p id="artist">---</p>
 
-  <div class="progress" onclick="setProgress(event)">
-    <div class="bar" id="bar"></div>
+    <audio id="audio"></audio>
+
+    <div class="controls">
+      <button onclick="prevSong()">⏮</button>
+      <button onclick="playPause()">▶️ / ⏸</button>
+      <button onclick="nextSong()">⏭</button>
+    </div>
   </div>
 
-  <div class="time">
-    <span id="current">0:00</span>
-    <span id="duration">0:00</span>
-  </div>
-
-  <div class="controls">
-    <button onclick="prev()">⏮</button>
-    <button class="play" onclick="togglePlay()">▶</button>
-    <button onclick="next()">⏭</button>
-  </div>
-
-  <audio id="audio" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+  <ul id="songList"></ul>
 </div>
 
-<script>
-const audio = document.getElementById("audio");
-const playBtn = document.querySelector(".play");
-const bar = document.getElementById("bar");
-const current = document.getElementById("current");
-const duration = document.getElementById("duration");
-
-function togglePlay(){
-  if(audio.paused){
-    audio.play();
-    playBtn.innerHTML="⏸";
-  }else{
-    audio.pause();
-    playBtn.innerHTML="▶";
-  }
-}
-
-audio.addEventListener("timeupdate",()=>{
-  const percent=(audio.currentTime/audio.duration)*100;
-  bar.style.width=percent+"%";
-
-  current.innerText=format(audio.currentTime);
-  duration.innerText=format(audio.duration);
-});
-
-function format(time){
-  if(isNaN(time)) return "0:00";
-  const min=Math.floor(time/60);
-  const sec=Math.floor(time%60).toString().padStart(2,"0");
-  return `${min}:${sec}`;
-}
-
-function setProgress(e){
-  const width=e.currentTarget.clientWidth;
-  const clickX=e.offsetX;
-  audio.currentTime=(clickX/width)*audio.duration;
-}
-
-function next(){ audio.currentTime=0; }
-function prev(){ audio.currentTime=0; }
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

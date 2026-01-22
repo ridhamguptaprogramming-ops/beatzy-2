@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Panel</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="admin">
+  <h1>🔐 Admin Music Upload</h1>
+
+  <input type="text" id="songTitle" placeholder="Song Title">
+  <input type="text" id="songArtist" placeholder="Artist Name">
+
+  <label>Song File (MP3)</label>
+  <input type="file" id="songFile" accept="audio/*">
+
+  <label>Cover Image</label>
+  <input type="file" id="coverImage" accept="image/*">
+
+  <button onclick="uploadSong()">Upload Song</button>
+
+  <h3>Uploaded Songs</h3>
+  <ul id="adminList"></ul>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
