@@ -1,0 +1,43 @@
+/* ADMIN */
+.admin-body{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:#f1f1f1;
+}
+
+.admin-card{
+  background:#fff;
+  padding:30px;
+  width:320px;
+  border-radius:22px;
+  box-shadow:0 30px 60px rgba(0,0,0,.15);
+}
+
+.admin-card h2{
+  margin-bottom:20px;
+}
+
+.admin-card input{
+  width:100%;
+  padding:12px;
+  margin-bottom:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+}
+
+.admin-card label{
+  font-size:13px;
+  opacity:.7;
+}
+
+.admin-card button{
+  width:100%;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  background:#ffcc66;
+  font-weight:600;
+  cursor:pointer;
+}

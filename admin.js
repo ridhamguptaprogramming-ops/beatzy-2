@@ -1,88 +1,37 @@
-let songs = JSON.parse(localStorage.getItem("songs")) || [];
-const adminList = document.getElementById("adminList");
-
-/* Upload Song */
 function uploadSong() {
-  const titleInput = document.getElementById("songTitle");
-  const artistInput = document.getElementById("songArtist");
-  const songInput = document.getElementById("songFile");
-  const coverInput = document.getElementById("coverImage");
+  const title = document.getElementById("title").value.trim();
+  const artist = document.getElementById("artist").value.trim();
+  const audioFile = document.getElementById("audio").files[0];
+  const coverFile = document.getElementById("cover").files[0];
 
-  const title = titleInput.value.trim();
-  const artist = artistInput.value.trim();
-  const songFile = songInput.files[0];
-  const coverFile = coverInput.files[0];
-
-  if (!title || !artist || !songFile || !coverFile) {
-    alert("❌ Please fill all fields");
+  if (!title || !artist || !audioFile || !coverFile) {
+    alert("Fill all fields");
     return;
   }
 
-  // Optional size check (LocalStorage safe)
-  if (songFile.size > 10 * 1024 * 1024) {
-    alert("❌ Song size must be under 10MB");
-    return;
-  }
+  const audioReader = new FileReader();
+  const coverReader = new FileReader();
 
-  const readerSong = new FileReader();
-  const readerCover = new FileReader();
+  audioReader.onload = () => {
+    coverReader.onload = () => {
 
-  readerSong.onload = () => {
-    readerCover.onload = () => {
-
-      songs.push({
-        id: Date.now(),
+      const song = {
         title,
         artist,
-        audio: readerSong.result,
-        cover: readerCover.result
-      });
+        audio: audioReader.result, // base64 mp3
+        cover: coverReader.result  // base64 image
+      };
 
+      const songs = JSON.parse(localStorage.getItem("songs")) || [];
+      songs.push(song);
       localStorage.setItem("songs", JSON.stringify(songs));
-      showAdminSongs();
 
-      // Reset form
-      titleInput.value = "";
-      artistInput.value = "";
-      songInput.value = "";
-      coverInput.value = "";
-
-      alert("✅ Song Uploaded Successfully 🎄");
+      alert("Song uploaded successfully ✅");
+      document.querySelectorAll("input").forEach(i => i.value = "");
     };
 
-    readerCover.readAsDataURL(coverFile);
+    coverReader.readAsDataURL(coverFile);
   };
 
-  readerSong.readAsDataURL(songFile);
+  audioReader.readAsDataURL(audioFile);
 }
-
-/* Show Songs */
-function showAdminSongs() {
-  adminList.innerHTML = "";
-
-  if (songs.length === 0) {
-    adminList.innerHTML = "<li>No songs uploaded</li>";
-    return;
-  }
-
-  songs.forEach((song, index) => {
-    const li = document.createElement("li");
-    li.innerHTML = `
-      ${song.title}
-      <button onclick="deleteSong(${index})">🗑</button>
-    `;
-    adminList.appendChild(li);
-  });
-}
-
-/* Delete Song */
-function deleteSong(index) {
-  if (!confirm("Delete this song?")) return;
-
-  songs.splice(index, 1);
-  localStorage.setItem("songs", JSON.stringify(songs));
-  showAdminSongs();
-}
-
-/* Init */
-showAdminSongs();

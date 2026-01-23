@@ -2,27 +2,26 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Admin Panel</title>
-<link rel="stylesheet" href="style.css">
+<title>Omi Admin – Upload Music</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="admin.css">
 </head>
-<body>
 
-<div class="admin">
-  <h1>🔐 Admin Music Upload</h1>
+<body class="admin-body">
 
-  <input type="text" id="songTitle" placeholder="Song Title">
-  <input type="text" id="songArtist" placeholder="Artist Name">
+<div class="admin-card">
+  <h2>🎵 Omi Admin</h2>
 
-  <label>Song File (MP3)</label>
-  <input type="file" id="songFile" accept="audio/*">
+  <input type="text" id="title" placeholder="Song Title">
+  <input type="text" id="artist" placeholder="Artist Name">
 
   <label>Cover Image</label>
-  <input type="file" id="coverImage" accept="image/*">
+  <input type="file" id="cover" accept="image/*">
+
+  <label>MP3 File</label>
+  <input type="file" id="audio" accept="audio/mp3">
 
   <button onclick="uploadSong()">Upload Song</button>
-
-  <h3>Uploaded Songs</h3>
-  <ul id="adminList"></ul>
 </div>
 
 <script src="admin.js"></script>
