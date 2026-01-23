@@ -2,31 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>My Music App</title>
+<title>Music App UI</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="app">
-  <h1>🎧 My Music App</h1>
+<div class="phone">
 
-  <div class="player">
-    <img id="cover" src="" alt="Cover">
-    <h2 id="title">No Song</h2>
-    <p id="artist">---</p>
+  <!-- HOME SCREEN -->
+  <section class="screen">
+    <div class="top">
+      <h2>Hi, Samantha</h2>
+      <div class="icons">🔍 ♡</div>
+    </div>
 
-    <audio id="audio"></audio>
+    <div class="chips">
+      <span class="active">All</span>
+      <span>New Release</span>
+      <span>Trending</span>
+    </div>
+
+    <div class="hero">
+      <div>
+        <h3>Discover Weekly</h3>
+        <p>Best slow instrumental playlists</p>
+        <button>▶</button>
+      </div>
+      <img src="https://picsum.photos/120">
+    </div>
+
+    <h4>Top Daily Playlists</h4>
+    <div class="list">
+      <div class="row">Starlit Reverie</div>
+      <div class="row">Midnight Confessions</div>
+    </div>
+  </section>
+
+  <!-- NOW PLAYING -->
+  <section class="screen">
+    <h3 class="center">Now Playing</h3>
+
+    <div class="cover">
+      <img src="https://picsum.photos/300">
+    </div>
+
+    <h3>Starlit Reverie</h3>
+    <p class="muted">Budiarti × Lil Magrib</p>
+
+    <div class="bar">
+      <span></span>
+    </div>
 
     <div class="controls">
-      <button onclick="prevSong()">⏮</button>
-      <button onclick="playPause()">▶️ / ⏸</button>
-      <button onclick="nextSong()">⏭</button>
+      ⏮ ⏸ ⏭
     </div>
-  </div>
+  </section>
 
-  <ul id="songList"></ul>
+  <!-- MY MUSIC -->
+  <section class="screen">
+    <div class="top">
+      <h2>My Music</h2>
+      ⋯
+    </div>
+
+    <div class="chips">
+      <span class="active">All</span>
+      <span>Playlists</span>
+      <span>Liked</span>
+    </div>
+
+    <div class="list">
+      <div class="row">Lost in the Echo</div>
+      <div class="row">Letters I Never Sent</div>
+      <div class="row">Tears on the Vinyl</div>
+    </div>
+  </section>
+
 </div>
 
-<script src="script.js"></script>
 </body>
 </html>
