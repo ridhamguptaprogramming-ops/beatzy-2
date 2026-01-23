@@ -22,10 +22,12 @@
   <input type="file" id="audio" accept="audio/mp3">
 
   <button onclick="uploadSong()">Upload Song</button>
+
+  <h3 style="margin-top:20px;">Uploaded Songs</h3>
+  <div id="songList"></div>
+
+  <button class="logout" onclick="logout()">Logout</button>
 </div>
-<button onclick="logout()" style="margin-top:10px;background:#ff5555;color:#fff;">
-  Logout
-</button>
 
 <script src="admin.js"></script>
 </body>

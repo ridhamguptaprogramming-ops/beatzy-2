@@ -10,22 +10,50 @@
 
 <div class="app">
 
+  <!-- HEADER -->
   <header class="top">
     <h2>Discover</h2>
-    <input type="search" placeholder="Search music">
+    <input type="search" id="search" placeholder="Search music">
   </header>
 
-  <section class="playlist" id="playlist">
+  <!-- PLAYLIST CONTROLS -->
+  <div style="padding:0 22px 10px;">
+    <select id="playlistSelect">
+      <option value="all">All Songs</option>
+    </select>
+    <button class="create-playlist-btn" onclick="createPlaylist()">➕ Playlist</button>
+  </div>
+
+  <!-- SONG LIST -->
+  <section class="playlist">
     <h3>My Music</h3>
+    <div id="songContainer"></div>
   </section>
 
+  <!-- PLAYER -->
+   <!-- PROGRESS BAR (SEPARATE ROW) -->
+<div class="progress-wrap">
+  <span id="currentTime">0:00</span>
+  <input type="range" id="progress" value="0" min="0" max="100">
+  <span id="duration">0:00</span>
+</div>
+
   <footer class="player">
-    <div>
-      <b id="nowTitle">Select a song</b><br>
-      <small id="nowArtist">—</small>
-    </div>
+
+  <!-- NOW PLAYING -->
+  <div class="now">
+    <b id="nowTitle">Select a song</b>
+    <small id="nowArtist">—</small>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <button id="shuffle">🔀</button>
     <button id="playBtn">▶</button>
-  </footer>
+    <button id="repeat">🔁</button>
+  </div>
+
+</footer>
 
 </div>
 

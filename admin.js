@@ -1,3 +1,26 @@
+const list = document.getElementById("songList");
+
+/* LOAD SONGS */
+function loadSongs(){
+  list.innerHTML = "";
+  const songs = JSON.parse(localStorage.getItem("songs")) || [];
+
+  songs.forEach((song, index) => {
+    const div = document.createElement("div");
+    div.className = "admin-song";
+    div.innerHTML = `
+      <img src="${song.cover}">
+      <div>
+        <b>${song.title}</b><br>
+        <small>${song.artist}</small>
+      </div>
+      <button onclick="deleteSong(${index})">🗑</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+/* UPLOAD */
 function uploadSong() {
   const title = document.getElementById("title").value.trim();
   const artist = document.getElementById("artist").value.trim();
@@ -14,32 +37,37 @@ function uploadSong() {
 
   audioReader.onload = () => {
     coverReader.onload = () => {
-
-      const song = {
+      const songs = JSON.parse(localStorage.getItem("songs")) || [];
+      songs.push({
         title,
         artist,
-        audio: audioReader.result, // base64 mp3
-        cover: coverReader.result  // base64 image
-      };
-
-      const songs = JSON.parse(localStorage.getItem("songs")) || [];
-      songs.push(song);
+        audio: audioReader.result,
+        cover: coverReader.result
+      });
       localStorage.setItem("songs", JSON.stringify(songs));
-
-      alert("Song uploaded successfully ✅");
+      loadSongs();
       document.querySelectorAll("input").forEach(i => i.value = "");
     };
-
     coverReader.readAsDataURL(coverFile);
   };
-
   audioReader.readAsDataURL(audioFile);
 }
-if(localStorage.getItem("adminLoggedIn") !== "true"){
-    window.location.href = "login.html";
-  }
 
+/* DELETE */
+function deleteSong(index){
+  const songs = JSON.parse(localStorage.getItem("songs")) || [];
+  if(confirm("Delete this song?")){
+    songs.splice(index,1);
+    localStorage.setItem("songs", JSON.stringify(songs));
+    loadSongs();
+  }
+}
+
+/* LOGOUT */
 function logout(){
   localStorage.removeItem("adminLoggedIn");
-  window.location.href = "login.html";
+  location.href = "login.html";
 }
+
+/* INIT */
+loadSongs();

@@ -1,43 +1,36 @@
-/* ADMIN */
-.admin-body{
-  min-height:100vh;
+.admin-song{
   display:flex;
-  justify-content:center;
   align-items:center;
-  background:#f1f1f1;
+  gap:12px;
+  background:#f6f6f6;
+  padding:10px;
+  border-radius:12px;
+  margin-top:10px;
 }
 
-.admin-card{
-  background:#fff;
-  padding:30px;
-  width:320px;
-  border-radius:22px;
-  box-shadow:0 30px 60px rgba(0,0,0,.15);
+.admin-song img{
+  width:42px;
+  height:42px;
+  border-radius:8px;
+  object-fit:cover;
 }
 
-.admin-card h2{
-  margin-bottom:20px;
+.admin-song button{
+  margin-left:auto;
+  background:#ff5555;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  padding:6px 10px;
+  cursor:pointer;
 }
 
-.admin-card input{
+.logout{
+  margin-top:16px;
   width:100%;
   padding:12px;
-  margin-bottom:12px;
-  border-radius:14px;
-  border:1px solid #ddd;
-}
-
-.admin-card label{
-  font-size:13px;
-  opacity:.7;
-}
-
-.admin-card button{
-  width:100%;
-  padding:14px;
+  background:#111;
+  color:#fff;
   border:none;
-  border-radius:16px;
-  background:#ffcc66;
-  font-weight:600;
-  cursor:pointer;
+  border-radius:14px;
 }
