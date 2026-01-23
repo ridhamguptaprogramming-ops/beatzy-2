@@ -35,3 +35,11 @@ function uploadSong() {
 
   audioReader.readAsDataURL(audioFile);
 }
+if(localStorage.getItem("adminLoggedIn") !== "true"){
+    window.location.href = "login.html";
+  }
+
+function logout(){
+  localStorage.removeItem("adminLoggedIn");
+  window.location.href = "login.html";
+}
